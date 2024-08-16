@@ -1,0 +1,114 @@
+; Shoe Shelves Shelf Magic
+
+For Each SH Part
+
+If this.ROSG.AX != NULL Then
+EXIT
+END IF
+
+If CAB.SSH_ANGLE == 0 Then
+Exit
+End If
+
+;BAND = 'ITII'
+
+AX = 0
+AY = -90 + SSH_ANGLE
+AZ = -90
+
+SSH_SHIFT_Z = SIN(SSH_ANGLE)*DZ
+
+Z -= SSH_SHIFT_Z - SSH_BACK_OUTSET
+
+MITL = -90 + SSH_ANGLE
+
+SSH_SHIFT_DX = (DX + this.S_SHBN.DZ)/COS(SSH_ANGLE) - (DX + this.S_SHBN.DZ) + (SSH_SHIFT_Z / Cos(SSH_ANGLE)) - (this.S_SHBN.DX * TAN(SSH_ANGLE)) - (SSH_BACK_OUTSET / Cos(SSH_ANGLE))
+
+DX += SSH_SHIFT_DX 
+
+Y += Sin(SSH_ANGLE)*(DX + this.S_SHBN.DZ) 
+
+COMMENT = 'Miter Back Edge {SSH_ANGLE}deg'
+DESC = 'Shoe Shelf'
+
+;-----------------------------------------------------------------------------------------------
+
+If SSPINNOTCH == 1 Then
+
+Dim PEGNOTCH1 as New Dado 
+    PEGNOTCH1.Visible<bool> = True
+    PEGNOTCH1.DX = 6mm 
+    PEGNOTCH1.DY = .5 
+    PEGNOTCH1.DZ = 3mm 
+    PEGNOTCH1.X = :DX - ((SSPINNOTCHFRONT+SSH_SHIFT_Z)/Cos(SSH_ANGLE)) + 2.5mm 
+    PEGNOTCH1.Y = 0
+    PEGNOTCH1.Z = 0
+    PEGNOTCH1.AX<deg> = 0
+    PEGNOTCH1.AY<deg> = 180
+    PEGNOTCH1.AZ<deg> = 0
+    PEGNOTCH1._FACEWP = 2
+    PEGNOTCH1.NAME = 'PEG 1'
+       
+Dim PEGNOTCH2 as New Dado 
+    PEGNOTCH2.Visible<bool> = True
+    PEGNOTCH2.DX = 6mm 
+    PEGNOTCH2.DY = .5 
+    PEGNOTCH2.DZ = 3mm 
+    PEGNOTCH2.X = :DX - ((SSPINNOTCHFRONT+SSH_SHIFT_Z+SSPINNOTCHSPACE)/Cos(SSH_ANGLE)) + 2.5mm
+    PEGNOTCH2.Y = 0
+    PEGNOTCH2.Z = 0
+    PEGNOTCH2.AX<deg> = 0
+    PEGNOTCH2.AY<deg> = 180
+    PEGNOTCH2.AZ<deg> = 0
+    PEGNOTCH2._FACEWP = 2
+    PEGNOTCH2.NAME = 'PEG 2'
+
+Dim PEGNOTCH3 as New Dado 
+    PEGNOTCH3.Visible<bool> = True
+    PEGNOTCH3.DX = 6mm 
+    PEGNOTCH3.DY = .5 
+    PEGNOTCH3.DZ = 3mm 
+    PEGNOTCH3.X = :DX - ((SSPINNOTCHFRONT+SSH_SHIFT_Z)/Cos(SSH_ANGLE)) + 2.5mm 
+    PEGNOTCH3.Y = :DY-.5
+    PEGNOTCH3.Z = 0
+    PEGNOTCH3.AX<deg> = 0
+    PEGNOTCH3.AY<deg> = 180
+    PEGNOTCH3.AZ<deg> = 0
+    PEGNOTCH3._FACEWP = 2
+    PEGNOTCH3.NAME = 'PEG 3'
+       
+Dim PEGNOTCH4 as New Dado 
+    PEGNOTCH4.Visible<bool> = True
+    PEGNOTCH4.DX = 6mm 
+    PEGNOTCH4.DY = .5 
+    PEGNOTCH4.DZ = 3mm 
+    PEGNOTCH4.X = :DX - ((SSPINNOTCHFRONT+SSH_SHIFT_Z+SSPINNOTCHSPACE)/Cos(SSH_ANGLE)) + 2.5mm
+    PEGNOTCH4.Y = :DY-.5
+    PEGNOTCH4.Z = 0
+    PEGNOTCH4.AX<deg> = 0
+    PEGNOTCH4.AY<deg> = 180
+    PEGNOTCH4.AZ<deg> = 0
+    PEGNOTCH4._FACEWP = 2
+    PEGNOTCH4.NAME = 'PEG 4'
+    
+End If
+
+;-------------------------------------------------------------------------------------------------
+
+If cab.HeelStop == 0 Then
+Exit
+End if
+
+Dim S_SHBN as new Part
+
+S_SHBN.DX = :.S_SHBN.Dx-:DZ
+S_SHBN.DY = :DY
+S_SHBN.DZ = _M:DZ
+S_SHBN.X = 4+dz
+S_SHBN.Y = 0
+S_SHBN.Z = :DZ
+S_SHBN.AX = 0
+S_SHBN.AY = -90
+S_SHBN.AZ = 0
+S_SHBN.LIBPART = 'Northstar Standard Cabinets\Heel Stop'
+S_SHBN.DESC = 'Heel Stop'

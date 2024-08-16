@@ -1,0 +1,9 @@
+; Shoe Shelves Shelf Bullnose Adjustments
+
+For Each S_SHBN Part
+
+IF SSH_SHIFT_Z == 0 Then
+EXIT
+END IF
+
+X += SSH_SHIFT_DX
